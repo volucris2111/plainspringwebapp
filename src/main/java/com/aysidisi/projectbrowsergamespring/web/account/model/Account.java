@@ -1,21 +1,25 @@
 
 package com.aysidisi.projectbrowsergamespring.web.account.model;
 
-import java.util.Date;
+import java.math.BigInteger;
+import java.util.List;
+
+import javax.persistence.GeneratedValue;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-@Document(collection = "account")
+@Document(collection = "accounts")
+@TypeAlias("account")
 public class Account
 {
-	@DateTimeFormat(iso = ISO.DATE_TIME)
-	private Date createdDate;
-	
+	private List<SimpleGrantedAuthority> authorities;
+
 	@Id
-	private String id;
+	@GeneratedValue
+	private BigInteger id;
 
 	private String mail;
 
@@ -23,14 +27,12 @@ public class Account
 
 	private String password;
 
-	private String role;
-
-	public Date getCreatedDate()
+	public List<SimpleGrantedAuthority> getAuthorities()
 	{
-		return createdDate;
+		return authorities;
 	}
 
-	public String getId()
+	public BigInteger getId()
 	{
 		return id;
 	}
@@ -49,18 +51,13 @@ public class Account
 	{
 		return password;
 	}
-
-	public String getRole()
+	
+	public void setAuthorities(final List<SimpleGrantedAuthority> authorities)
 	{
-		return role;
-	}
-
-	public void setCreatedDate(final Date createdDate)
-	{
-		this.createdDate = createdDate;
+		this.authorities = authorities;
 	}
 	
-	public void setId(final String id)
+	public void setId(final BigInteger id)
 	{
 		this.id = id;
 	}
@@ -80,8 +77,4 @@ public class Account
 		this.password = password;
 	}
 
-	public void setRole(final String role)
-	{
-		this.role = role;
-	}
 }

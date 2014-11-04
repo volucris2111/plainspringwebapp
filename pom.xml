@@ -9,11 +9,10 @@
 	<properties>
 		<java-version>1.6</java-version>
 		<org.slf4j-version>1.7.7</org.slf4j-version>
-		<spring.version>3.2.8.RELEASE</spring.version>
-		<spring.security.version>3.2.3.RELEASE</spring.security.version>
+		<spring.version>4.1.1.RELEASE</spring.version>
+		<spring.security.version>3.2.5.RELEASE</spring.security.version>
 		<jstl.version>1.2</jstl.version>
-		<mongojavadriver.version>2.12.4</mongojavadriver.version>
-	</properties>
+		</properties>
  
 	<dependencies> 
  
@@ -82,13 +81,6 @@
 			<version>1.2</version>
 		</dependency>
 	
-		<!-- Test -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
-			<scope>test</scope>
-		</dependency>
 		
 		<!-- jstl for jsp page -->
 		<dependency>
@@ -108,15 +100,25 @@
 		<dependency>
 	        <groupId>org.springframework.data</groupId>
 	        <artifactId>spring-data-mongodb</artifactId>
-	        <version>1.6.0.RELEASE</version>
+	        <version>1.6.1.RELEASE</version>
 	    </dependency>
+	    <dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.12.4</version>
+		</dependency>
 	    <!-- hibernate -->
 	    <dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.3.5.Final</version>
 		</dependency>
-			    
+		<!-- JPA -->
+		<dependency>
+		  <groupId>org.springframework.data</groupId>
+		  <artifactId>spring-data-jpa</artifactId>
+		  <version>1.6.1.RELEASE</version>
+		</dependency>
 	</dependencies>
     <build>
         <plugins>

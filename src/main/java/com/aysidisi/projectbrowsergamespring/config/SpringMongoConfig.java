@@ -1,31 +1,47 @@
 
 package com.aysidisi.projectbrowsergamespring.config;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
 @Configuration
-public class SpringMongoConfig
+public class SpringMongoConfig extends AbstractMongoConfiguration
 {
 
-	public @Bean MongoDbFactory mongoDbFactory() throws Exception
+	@Override
+	@Bean
+	public MongoClient mongo() throws Exception
 	{
-		return new SimpleMongoDbFactory(new MongoClient(),
-				"projectbrowsergamespring");
+		List<ServerAddress> serverAdresses = new LinkedList<ServerAddress>();
+		ServerAddress address = new ServerAddress("127.0.0.1", 27017);
+		serverAdresses.add(address);
+		List<MongoCredential> credentials = new LinkedList<MongoCredential>();
+		MongoCredential credential = MongoCredential.createMongoCRCredential(
+				"admin", "nicedb", "admin".toCharArray());
+		credentials.add(credential);
+		MongoClient mongoClient = new MongoClient(address, credentials);
+		return mongoClient;
 	}
 
-	public @Bean MongoTemplate mongoTemplate() throws Exception
+	@Override
+	@Bean
+	public MongoTemplate mongoTemplate() throws Exception
 	{
-
-		MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
-
-		return mongoTemplate;
-
+		return new MongoTemplate(mongo(), getDatabaseName());
 	}
-
+	
+	@Override
+	protected String getDatabaseName()
+	{
+		return "nicedb";
+	}
 }
