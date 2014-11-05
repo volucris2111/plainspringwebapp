@@ -13,13 +13,13 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @Configuration
 @ComponentScan(
-{ "com.aysidisi.projectbrowsergamespring.web.*" })
+		{ "com.aysidisi.projectbrowsergamespring.web.*" })
 @EnableMongoRepositories("com.aysidisi.projectbrowsergamespring.web.*")
 @Import(
-{ SecurityConfig.class, SpringMongoConfig.class })
+		{ SecurityConfig.class, SpringMongoConfig.class })
 public class AppConfig
 {
-
+	
 	@Bean
 	public InternalResourceViewResolver viewResolver()
 	{
@@ -29,5 +29,5 @@ public class AppConfig
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
 	}
-	
+
 }

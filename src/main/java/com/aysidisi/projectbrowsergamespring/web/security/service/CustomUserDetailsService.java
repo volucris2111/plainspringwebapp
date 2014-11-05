@@ -14,15 +14,19 @@ import com.aysidisi.projectbrowsergamespring.web.account.model.Account;
 @Service
 public class CustomUserDetailsService implements UserDetailsService
 {
-
+	
 	@Autowired
 	private AccountDao accountDao;
-
+	
 	@Override
 	public UserDetails loadUserByUsername(final String name)
 			throws UsernameNotFoundException
 	{
 		Account account = accountDao.findByName(name);
+		if (account == null)
+		{
+			throw new UsernameNotFoundException("FUUUU");
+		}
 		return new User(account.getName(), account.getPassword(),
 				account.getAuthorities());
 	}

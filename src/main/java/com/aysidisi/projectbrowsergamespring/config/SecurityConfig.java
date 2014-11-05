@@ -2,7 +2,6 @@
 package com.aysidisi.projectbrowsergamespring.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,35 +14,29 @@ import com.aysidisi.projectbrowsergamespring.web.security.service.CustomUserDeta
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
-
+	
 	@Autowired
 	private CustomUserDetailsService customerUserDetailsService;
-
+	
 	@Autowired
 	public void configureGlobal(final AuthenticationManagerBuilder auth)
 			throws Exception
 	{
-		auth.inMemoryAuthentication().withUser("mkyong").password("123456")
-				.roles("USER");
-		auth.inMemoryAuthentication().withUser("admin").password("123456")
-				.roles("ADMIN");
-		auth.inMemoryAuthentication().withUser("dba").password("123456")
-				.roles("DBA");
+		auth.inMemoryAuthentication().withUser("admin").password("dayum2010")
+				.roles("ADMIN", "USER");
 	}
-	
-	@Bean
-	public CustomUserDetailsService defaultUserDetailsService()
-	{
-		return new CustomUserDetailsService();
-	}
-	
+
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception
 	{
-		http.userDetailsService(customerUserDetailsService);
-		http.authorizeRequests().antMatchers("/admin/**")
-		.access("hasRole('admin')").antMatchers("/dba/**")
-		.access("hasRole('admin') or hasRole('dba')").and().formLogin();
-
+		http.userDetailsService(customerUserDetailsService).authorizeRequests()
+		.antMatchers("/login/**").permitAll()
+		.antMatchers("/account/**").permitAll()
+		.antMatchers("/account/**/**").access("hasRole('ROLE_USER')")
+		.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+		.antMatchers("/**").access("hasRole('ROLE_USER')").and()
+		.formLogin().loginPage("/login").failureUrl("/login?error")
+		.usernameParameter("username").passwordParameter("password")
+		.and().logout().logoutSuccessUrl("/login?logout").and().csrf();
 	}
 }

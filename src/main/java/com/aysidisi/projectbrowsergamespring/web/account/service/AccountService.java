@@ -32,6 +32,18 @@ public class AccountService
 
 	public void save(final Account account)
 	{
-		accountDao.save(account);
+		Account storedAccount = accountDao.findByName(account.getName());
+		if (storedAccount != null)
+		{
+			storedAccount.setMail(account.getMail());
+			storedAccount.setName(account.getName());
+			storedAccount.setPassword(account.getPassword());
+			storedAccount.setAuthorities(account.getAuthorities());
+		}
+		else
+		{
+			storedAccount = account;
+		}
+		accountDao.save(storedAccount);
 	}
 }
