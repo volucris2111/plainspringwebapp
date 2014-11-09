@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.aysidisi.projectbrowsergamespring.web.core.ViewManager;
+import com.aysidisi.projectbrowsergamespring.web.core.ViewTemplate;
+
 @Controller
 public class LoginController
 {
@@ -16,7 +19,9 @@ public class LoginController
 			@RequestParam(value = "accountCreated", required = false) final String accountCreated,
 			@RequestParam(value = "logout", required = false) final String logout)
 	{
-		ModelAndView modelAndView = new ModelAndView("login/login");
+		ModelAndView modelAndView = new ModelAndView(
+				ViewManager.generateViewName(ViewTemplate.bodyOnly,
+						"login/login"));
 		if (error != null)
 		{
 			modelAndView.addObject("error", "Invalid username and password!");

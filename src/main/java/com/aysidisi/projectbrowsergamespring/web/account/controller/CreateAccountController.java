@@ -14,48 +14,52 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.aysidisi.projectbrowsergamespring.web.account.model.Account;
 import com.aysidisi.projectbrowsergamespring.web.account.service.AccountService;
+import com.aysidisi.projectbrowsergamespring.web.core.ViewManager;
+import com.aysidisi.projectbrowsergamespring.web.core.ViewTemplate;
 
 @Controller
 public class CreateAccountController
 {
 	@Autowired
 	private AccountService accountService;
-	
+
 	@RequestMapping(value = "/account", method = RequestMethod.GET, params = "create")
 	public ModelAndView createAccount()
 	{
-		ModelAndView modelAndView = new ModelAndView("account/createAccount");
-		initView(modelAndView, new Account());
+		ModelAndView modelAndView = new ModelAndView(
+				ViewManager.generateViewName(ViewTemplate.bodyOnly,
+						"account/createAccount"));
+		this.initView(modelAndView, new Account());
 		return modelAndView;
 	}
-	
+
 	public void initView(final ModelAndView modelAndView, final Account account)
 	{
 		modelAndView.addObject("account", account);
 	}
-	
+
 	@RequestMapping(value = "/account", method = RequestMethod.POST)
 	public ModelAndView saveAccount(@ModelAttribute final Account account)
 	{
 		ModelAndView modelAndView;
-		List<String> errors = validateAccount(account);
+		List<String> errors = this.validateAccount(account);
 		if (errors.isEmpty())
 		{
 			List<SimpleGrantedAuthority> authorities = new LinkedList<SimpleGrantedAuthority>();
 			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 			account.setAuthorities(authorities);
-			accountService.save(account);
+			this.accountService.save(account);
 			modelAndView = new ModelAndView("redirect:/login?accountCreated");
 		}
 		else
 		{
-			modelAndView = new ModelAndView("account/createAccount");
-			initView(modelAndView, account);
+			modelAndView = new ModelAndView("createAccount");
+			this.initView(modelAndView, account);
 			modelAndView.addObject("errors", errors);
 		}
 		return modelAndView;
 	}
-	
+
 	public List<String> validateAccount(final Account account)
 	{
 		List<String> errors = new LinkedList<String>();
@@ -66,7 +70,7 @@ public class CreateAccountController
 		{
 			errors.add("Pflichtfelder!");
 		}
-		else if (accountService.findByName(account.getName()) != null)
+		else if (this.accountService.findByName(account.getName()) != null)
 		{
 			errors.add("Name bereits vorhanden!");
 		}
