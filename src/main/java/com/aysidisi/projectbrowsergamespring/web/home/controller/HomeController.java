@@ -12,11 +12,11 @@ import com.aysidisi.projectbrowsergamespring.web.core.ViewTemplate;
 @Controller
 public class HomeController
 {
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home()
 	{
 		return new ModelAndView(ViewManager.generateViewName(
-				ViewTemplate.bodyOnly, "core/home"));
+				ViewTemplate.mainTemplate, "core/home"));
 	}
 }

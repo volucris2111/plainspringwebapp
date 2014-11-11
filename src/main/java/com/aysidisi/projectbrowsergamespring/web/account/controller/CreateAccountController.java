@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.aysidisi.projectbrowsergamespring.web.account.controller.helper.AccountValidator;
 import com.aysidisi.projectbrowsergamespring.web.account.model.Account;
 import com.aysidisi.projectbrowsergamespring.web.account.service.AccountService;
 import com.aysidisi.projectbrowsergamespring.web.core.ViewManager;
@@ -22,7 +23,10 @@ public class CreateAccountController
 {
 	@Autowired
 	private AccountService accountService;
-
+	
+	@Autowired
+	private AccountValidator accountValidator;
+	
 	@RequestMapping(value = "/account", method = RequestMethod.GET, params = "create")
 	public ModelAndView createAccount()
 	{
@@ -32,7 +36,7 @@ public class CreateAccountController
 		this.initView(modelAndView, new Account());
 		return modelAndView;
 	}
-
+	
 	public void initView(final ModelAndView modelAndView, final Account account)
 	{
 		modelAndView.addObject("account", account);
@@ -42,7 +46,7 @@ public class CreateAccountController
 	public ModelAndView saveAccount(@ModelAttribute final Account account)
 	{
 		ModelAndView modelAndView;
-		List<String> errors = this.validateAccount(account);
+		List<String> errors = this.accountValidator.validateAccount(account);
 		if (errors.isEmpty())
 		{
 			List<SimpleGrantedAuthority> authorities = new LinkedList<SimpleGrantedAuthority>();
@@ -59,21 +63,5 @@ public class CreateAccountController
 		}
 		return modelAndView;
 	}
-
-	public List<String> validateAccount(final Account account)
-	{
-		List<String> errors = new LinkedList<String>();
-		if (account.getName() == null || account.getName().isEmpty()
-				|| account.getPassword() == null
-				|| account.getPassword().isEmpty() || account.getMail() == null
-				|| account.getMail().isEmpty())
-		{
-			errors.add("Pflichtfelder!");
-		}
-		else if (this.accountService.findByName(account.getName()) != null)
-		{
-			errors.add("Name bereits vorhanden!");
-		}
-		return errors;
-	}
+	
 }
