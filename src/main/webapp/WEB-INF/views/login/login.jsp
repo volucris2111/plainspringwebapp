@@ -73,7 +73,7 @@
 		</form>
 	</div>
  	<div>
- 		<a href="<c:url value='/account?create' />">Registrieren</a>
+ 		<a href="<c:url value='/signup' />">Registrieren</a>
  	</div>
 </body>
 </html>

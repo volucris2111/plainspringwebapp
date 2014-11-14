@@ -14,7 +14,7 @@
 			</c:forEach>
 			</table>
 		</c:if>
-		<c:url  value="/signup" var="logoutUrl" />
+		<c:url  value="/account/?edit" var="logoutUrl" />
 		<form:form action="${logoutUrl}" method="post" modelAttribute="account" >
 			<table>
 				<tr>

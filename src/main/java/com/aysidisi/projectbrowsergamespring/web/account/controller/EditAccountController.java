@@ -5,7 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,21 +21,24 @@ import com.aysidisi.projectbrowsergamespring.web.core.ViewManager;
 import com.aysidisi.projectbrowsergamespring.web.core.ViewTemplate;
 
 @Controller
-public class CreateAccountController
+public class EditAccountController
 {
 	@Autowired
 	private AccountService accountService;
 	
 	@Autowired
 	private AccountValidator accountValidator;
-	
-	@RequestMapping(value = "/signup", method = RequestMethod.GET)
-	public ModelAndView createAccount()
+
+	@RequestMapping(value = "/account/", method = RequestMethod.GET, params = "edit")
+	public ModelAndView editAccount()
 	{
 		ModelAndView modelAndView = new ModelAndView(
-				ViewManager.generateViewName(ViewTemplate.bodyOnly,
-						"account/createAccount"));
-		this.initView(modelAndView, new Account());
+				ViewManager.generateViewName(ViewTemplate.mainTemplate,
+						"account/editAccount"));
+		Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+		this.initView(modelAndView,
+				this.accountService.findByName(authentication.getName()));
 		return modelAndView;
 	}
 	
@@ -42,8 +47,8 @@ public class CreateAccountController
 		modelAndView.addObject("account", account);
 	}
 
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ModelAndView saveAccount(@ModelAttribute final Account account)
+	@RequestMapping(value = "/account", method = RequestMethod.POST, params = "edit")
+	public ModelAndView updateAccount(@ModelAttribute final Account account)
 	{
 		ModelAndView modelAndView;
 		List<String> errors = this.accountValidator.validateAccount(account);
@@ -57,11 +62,11 @@ public class CreateAccountController
 		}
 		else
 		{
-			modelAndView = new ModelAndView("createAccount");
+			modelAndView = new ModelAndView(ViewManager.generateViewName(
+					ViewTemplate.mainTemplate, "account/editAccount"));
 			this.initView(modelAndView, account);
 			modelAndView.addObject("errors", errors);
 		}
 		return modelAndView;
 	}
-	
 }
