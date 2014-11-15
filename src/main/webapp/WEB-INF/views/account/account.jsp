@@ -22,7 +22,7 @@
 				<td>E-Mail:</td><td>${account.mail}</td>
 			</tr>
 			<tr>
-				<td>&nbsp;</td><td><a href="<c:url value="/account/?edit"/>"><button>Ändern</button></a></td>
+				<td>&nbsp;</td><td align="right"><a href="<c:url value="/account/?edit"/>"><button>Ändern</button></a></td>
 			</tr>
 		</table>
 	</body>

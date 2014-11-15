@@ -3,4 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-Header
+<form action="<c:url value='/login?logout'/>" method="POST" id="logoutForm">
+Willkommen ${pageContext.request.userPrincipal.name}! <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> <input name="submit" type="submit" value="Logout"/>
+</form>

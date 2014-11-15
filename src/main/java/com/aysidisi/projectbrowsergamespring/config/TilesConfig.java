@@ -16,13 +16,13 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 public class TilesConfig extends TilesConfigurer
 {
 	public static class JavaDefinitionsFactory extends
-	UnresolvingLocaleDefinitionsFactory
+			UnresolvingLocaleDefinitionsFactory
 	{
-		
+
 		public JavaDefinitionsFactory()
 		{
 		}
-
+		
 		@Override
 		public Definition getDefinition(final String name,
 				final Request tilesContext)
@@ -44,15 +44,15 @@ public class TilesConfig extends TilesConfigurer
 			return definition;
 		}
 	}
-
-	private static final Map<String, Definition> tiles = new HashMap<String, Definition>();
 	
+	private static final Map<String, Definition> tiles = new HashMap<String, Definition>();
+
 	@Bean
 	public TilesConfigurer tilesConfigurer()
 	{
 		TilesConfigurer tilesConfigurer = new TilesConfigurer();
 		tilesConfigurer
-		.setDefinitionsFactoryClass(JavaDefinitionsFactory.class);
+				.setDefinitionsFactoryClass(JavaDefinitionsFactory.class);
 		tilesConfigurer.setDefinitions(new String[] {});
 		this.addDefinition("bodyOnly", new Attribute(
 				"/WEB-INF/tiles/bodyOnly/bodyOnly.jsp"), this
@@ -62,19 +62,19 @@ public class TilesConfig extends TilesConfigurer
 				.getMainTemplateAttributes());
 		return tilesConfigurer;
 	}
-	
+
 	private void addDefinition(final String name, final Attribute template,
 			final Map<String, Attribute> attributes)
 	{
 		tiles.put(name, new Definition(name, template, attributes));
 	}
-	
+
 	private Map<String, Attribute> getBodyOnlyAttributes()
 	{
 		Map<String, Attribute> attributes = new HashMap<String, Attribute>();
 		return attributes;
 	}
-	
+
 	private Map<String, Attribute> getMainTemplateAttributes()
 	{
 		Map<String, Attribute> attributes = new HashMap<String, Attribute>();
@@ -86,5 +86,5 @@ public class TilesConfig extends TilesConfigurer
 				"/WEB-INF/tiles/mainTemplate/footer.jsp"));
 		return attributes;
 	}
-
+	
 }

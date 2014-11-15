@@ -30,10 +30,9 @@
 					<td>E-Mail:</td><td><form:input path="mail"/></td>
 				</tr>
 				<tr>
-					<td>&nbsp;</td><td><button type="submit" name="save" value="speichern">Registrieren</button></td>
+					<td>&nbsp;</td><td align="right"><button type="submit" name="save" value="speichern">Registrieren</button><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /></td>
 				</tr>
 			</table>
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form:form>
 	</body>
 </html>
