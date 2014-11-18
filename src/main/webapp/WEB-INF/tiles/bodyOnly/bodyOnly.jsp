@@ -4,10 +4,10 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
-<head>
-<title>ProjectBrowserGameSpring</title>
-</head>
-<body>
-	<tiles:insertAttribute name="body"/>
-</body>	
+	<head>
+		<title>ProjectBrowserGameSpring</title>
+	</head>
+	<body>
+		<tiles:insertAttribute name="body"/>
+	</body>	
 </html>
