@@ -3,7 +3,7 @@ package com.aysidisi.projectbrowsergamespring.web.home.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,22 +19,39 @@ public class HomeController
 {
 	@Autowired
 	private AccountService accountService;
-	
+
 	@Autowired
 	private SimpMessageSendingOperations messagingTemplate;
 	
-	@MessageMapping("/testreg")
-	@SendTo("/test1/dayum")
-	public String greeting() throws Exception
+	@MessageMapping("/connect")
+	public void connect(final SimpMessageHeaderAccessor headerAccessor) throws Exception
 	{
-		return "Hello, bloit!";
+		// if (ChatTest.getInstance().getChats().get(1) == null)
+		// {
+		// ChatTest.getInstance().getChats().put(1, new HashSet<String>());
+		// }
+		// if (!ChatTest.getInstance().getChats().get(1)
+		// .contains(SecurityContextHolder.getContext().getAuthentication().getName()))
+		// {
+		// ChatTest.getInstance().getChats().get(1)
+		// .add(SecurityContextHolder.getContext().getAuthentication().getName());
+		// }
+		this.messagingTemplate.convertAndSend("/chat/connect", headerAccessor.getUser().getName()
+				+ " ist beigetreten!");
 	}
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home()
 	{
-		this.messagingTemplate.convertAndSend("/test1/dayum", "bloit bloit!");
-		return new ModelAndView(ViewManager.generateViewName(
-				ViewTemplate.mainTemplate, "core/home"));
+		return new ModelAndView(
+				ViewManager.generateViewName(ViewTemplate.mainTemplate, "core/home"));
+	}
+
+	@MessageMapping("/message")
+	public void sendMessage(final String message, final SimpMessageHeaderAccessor headerAccessor)
+			throws Exception
+	{
+		this.messagingTemplate.convertAndSend("/chat/message", headerAccessor.getUser().getName()
+				+ ": " + message);
 	}
 }

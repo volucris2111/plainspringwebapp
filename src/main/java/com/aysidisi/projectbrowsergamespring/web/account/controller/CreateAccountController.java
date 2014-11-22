@@ -23,25 +23,24 @@ public class CreateAccountController
 {
 	@Autowired
 	private AccountService accountService;
-	
+
 	@Autowired
 	private AccountValidator accountValidator;
-	
+
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public ModelAndView createAccount()
 	{
-		ModelAndView modelAndView = new ModelAndView(
-				ViewManager.generateViewName(ViewTemplate.bodyOnly,
-						"account/createAccount"));
+		ModelAndView modelAndView = new ModelAndView(ViewManager.generateViewName(
+				ViewTemplate.bodyOnly, "account/createAccount"));
 		this.initView(modelAndView, new Account());
 		return modelAndView;
 	}
-	
+
 	public void initView(final ModelAndView modelAndView, final Account account)
 	{
 		modelAndView.addObject("account", account);
 	}
-
+	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ModelAndView saveAccount(@ModelAttribute final Account account)
 	{
@@ -57,11 +56,11 @@ public class CreateAccountController
 		}
 		else
 		{
-			modelAndView = new ModelAndView("createAccount");
+			modelAndView = new ModelAndView("account/createAccount");
 			this.initView(modelAndView, account);
 			modelAndView.addObject("errors", errors);
 		}
 		return modelAndView;
 	}
-	
+
 }
