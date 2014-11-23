@@ -37,7 +37,7 @@ Bitte logge dich ein oder registriere dich!
 		</tr>
 		<tr>
 			<td>
-				<a href="<c:url value='/signup' />"><button>Registrieren</button></a>
+				<a href="<c:url value='/signup' />">Registrieren</a>
 			</td>
 			<td align="right">
 				<input name="submit" type="submit" value="Login"/>

@@ -1,5 +1,5 @@
 
-package com.aysidisi.projectbrowsergamespring.web.home.controller;
+package com.aysidisi.projectbrowsergamespring.web.chat.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,13 +10,12 @@ import com.aysidisi.projectbrowsergamespring.web.core.ViewManager;
 import com.aysidisi.projectbrowsergamespring.web.core.ViewTemplate;
 
 @Controller
-public class HomeController
+public class ChatController
 {
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/chat", method = RequestMethod.GET)
 	public ModelAndView home()
 	{
 		return new ModelAndView(
-				ViewManager.generateViewName(ViewTemplate.mainTemplate, "core/home"));
+				ViewManager.generateViewName(ViewTemplate.mainTemplate, "chat/chat"));
 	}
-	
 }
