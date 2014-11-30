@@ -37,7 +37,7 @@
 	</script>
 <table>
 	<tr>
-		<td colspan="2"><textarea rows="20" cols="100" id="chat">test</textarea></td>
+		<td colspan="2"><textarea rows="20" cols="100" id="chat">test.</textarea></td>
 	</tr>
 	<tr>
 		<td><input type="text" id="textinput"/></td><td><button onclick="sendMessage()">Send</button></td>
