@@ -165,7 +165,8 @@
                     </additionalProjectnatures>
                     <downloadSources>true</downloadSources>
                     <downloadJavadocs>true</downloadJavadocs>
-                 <wtpversion>2.0</wtpversion>
+                 <wtpversion>3.6</wtpversion>
+                 <wtpdefaultserver></wtpdefaultserver>
                 </configuration>
             </plugin>
             <plugin>
