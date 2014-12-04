@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.aysidisi.plainspringwebapp.web.account.dao.AccountDao;
 import com.aysidisi.plainspringwebapp.web.account.model.Account;
+import com.aysidisi.plainspringwebapp.web.security.service.CustomUserDetailsService;
 
 @Service
 public class AccountService
@@ -15,35 +16,37 @@ public class AccountService
 	@Autowired
 	private AccountDao accountDao;
 	
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
+	
 	public void delete(final Account account)
 	{
-		accountDao.delete(account);
+		this.accountDao.delete(account);
 	}
 	
 	public List<Account> findAll()
 	{
-		return accountDao.findAll();
+		return this.accountDao.findAll();
 	}
 	
 	public Account findByName(final String name)
 	{
-		return accountDao.findByName(name);
+		return this.accountDao.findByName(name);
 	}
 
 	public void save(final Account account)
 	{
-		Account storedAccount = accountDao.findByName(account.getName());
+		Account storedAccount = this.accountDao.findByName(account.getName());
 		if (storedAccount != null)
 		{
 			storedAccount.setMail(account.getMail());
 			storedAccount.setName(account.getName());
 			storedAccount.setPassword(account.getPassword());
-			storedAccount.setAuthorities(account.getAuthorities());
 		}
 		else
 		{
 			storedAccount = account;
 		}
-		accountDao.save(storedAccount);
+		this.accountDao.save(storedAccount);
 	}
 }

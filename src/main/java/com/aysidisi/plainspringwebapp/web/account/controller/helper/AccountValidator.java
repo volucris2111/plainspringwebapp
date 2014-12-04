@@ -19,15 +19,15 @@ public class AccountValidator
 	public List<String> validateAccount(final Account account)
 	{
 		List<String> errors = new LinkedList<String>();
+		Account storedAccount = this.accountService.findByName(account.getName());
 		if (account.getName() == null || account.getName().isEmpty()
-				|| account.getPassword() == null
-				|| account.getPassword().isEmpty() || account.getMail() == null
-				|| account.getMail().isEmpty())
+				|| account.getPassword() == null || account.getPassword().isEmpty()
+				|| account.getMail() == null || account.getMail().isEmpty())
 		{
 			errors.add("Pflichtfelder!");
 		}
-		else if (account.getName().equals("admin")
-				|| this.accountService.findByName(account.getName()) != null)
+		else if (account.getName().equals("admin") || storedAccount != null
+				&& storedAccount.getId() != account.getId())
 		{
 			errors.add("Name bereits vergeben!");
 		}

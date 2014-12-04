@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,6 +33,8 @@ public class CreateAccountController
 	{
 		ModelAndView modelAndView = new ModelAndView(ViewManager.generateViewName(
 				ViewTemplate.bodyOnly, "account/createAccount"));
+		List<GrantedAuthority> authorities = new LinkedList<GrantedAuthority>();
+		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		this.initView(modelAndView, new Account());
 		return modelAndView;
 	}
@@ -51,6 +54,7 @@ public class CreateAccountController
 			List<SimpleGrantedAuthority> authorities = new LinkedList<SimpleGrantedAuthority>();
 			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 			account.setAuthorities(authorities);
+			account.setEnabled(true);
 			this.accountService.save(account);
 			modelAndView = new ModelAndView("redirect:/login?accountCreated");
 		}
