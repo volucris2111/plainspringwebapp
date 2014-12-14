@@ -6,7 +6,7 @@
     <script src="./resources/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript">
 		function connect() {
-	        var socket = new SockJS('/projectbrowsergamespring/chatreg');
+	        var socket = new SockJS('/plainspringwebapp/chatreg');
 	        stompClient = Stomp.over(socket);
 	        stompClient.connect({}, function(frame) {
 	            console.log('Connected: ' + frame);
