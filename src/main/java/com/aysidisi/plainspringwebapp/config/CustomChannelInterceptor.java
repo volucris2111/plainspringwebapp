@@ -15,38 +15,38 @@ import com.aysidisi.plainspringwebapp.web.account.model.Account;
 
 public class CustomChannelInterceptor implements ChannelInterceptor
 {
-	
+
 	@Override
 	public void afterReceiveCompletion(final Message<?> message, final MessageChannel channel,
 			final Exception ex)
 	{
-
+		
 	}
-	
+
 	@Override
 	public void afterSendCompletion(final Message<?> message, final MessageChannel channel,
 			final boolean sent, final Exception ex)
 	{
-
+		
 	}
-	
+
 	@Override
 	public Message<?> postReceive(final Message<?> message, final MessageChannel channel)
 	{
 		return message;
 	}
-	
+
 	@Override
 	public void postSend(final Message<?> message, final MessageChannel channel, final boolean sent)
 	{
 	}
-	
+
 	@Override
 	public boolean preReceive(final MessageChannel channel)
 	{
 		return false;
 	}
-	
+
 	@Override
 	public Message<?> preSend(final Message<?> message, final MessageChannel channel)
 	{
@@ -70,10 +70,11 @@ public class CustomChannelInterceptor implements ChannelInterceptor
 			else if (simpMessageType.equals(SimpMessageType.DISCONNECT)
 					|| simpMessageType.equals(SimpMessageType.UNSUBSCRIBE))
 			{
+				Account account = (Account) ((UsernamePasswordAuthenticationToken) message
+						.getHeaders().get("simpUser")).getPrincipal();
 				for (String key : webSocketSessionCache.keySet())
 				{
-					webSocketSessionCache.get(key)
-					.remove(message.getHeaders().get("simpSessionId"));
+					webSocketSessionCache.get(key).remove(account.getId());
 				}
 			}
 		}
