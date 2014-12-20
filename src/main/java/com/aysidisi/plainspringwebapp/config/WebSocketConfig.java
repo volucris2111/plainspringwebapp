@@ -19,26 +19,24 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer
 	{
 		registration.setInterceptors(new CustomChannelInterceptor());
 	}
-
+	
 	@Override
 	public void configureClientOutboundChannel(final ChannelRegistration registration)
 	{
-		// TODO Auto-generated method stub
-		super.configureClientOutboundChannel(registration);
 		registration.setInterceptors(new CustomChannelInterceptor());
 	}
-	
+
 	@Override
 	public void configureMessageBroker(final MessageBrokerRegistry registry)
 	{
 		registry.enableSimpleBroker("/chat");
 		registry.setApplicationDestinationPrefixes("/app");
 	}
-
+	
 	@Override
 	public void registerStompEndpoints(final StompEndpointRegistry registry)
 	{
 		registry.addEndpoint("/chatreg").withSockJS();
 	}
-	
+
 }

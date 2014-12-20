@@ -1,6 +1,7 @@
 
 package com.aysidisi.plainspringwebapp.config;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 
 import org.springframework.messaging.Message;
@@ -54,18 +55,17 @@ public class CustomChannelInterceptor implements ChannelInterceptor
 		if (!simpMessageType.equals(SimpMessageType.MESSAGE))
 		{
 			String simpDestination = (String) message.getHeaders().get("simpDestination");
-			HashMap<String, HashMap<String, Account>> webSocketSessionCache = WebSocketSessionCache
+			HashMap<String, HashMap<BigInteger, Account>> webSocketSessionCache = WebSocketSessionCache
 					.getInstance();
 			if (simpMessageType.equals(SimpMessageType.SUBSCRIBE))
 			{
 				if (webSocketSessionCache.get(simpDestination) == null)
 				{
-					webSocketSessionCache.put(simpDestination, new HashMap<String, Account>());
+					webSocketSessionCache.put(simpDestination, new HashMap<BigInteger, Account>());
 				}
-				webSocketSessionCache.get(simpDestination).put(
-						(String) message.getHeaders().get("simpSessionId"),
-						(Account) ((UsernamePasswordAuthenticationToken) message.getHeaders().get(
-								"simpUser")).getPrincipal());
+				Account account = (Account) ((UsernamePasswordAuthenticationToken) message
+						.getHeaders().get("simpUser")).getPrincipal();
+				webSocketSessionCache.get(simpDestination).put(account.getId(), account);
 			}
 			else if (simpMessageType.equals(SimpMessageType.DISCONNECT)
 					|| simpMessageType.equals(SimpMessageType.UNSUBSCRIBE))
