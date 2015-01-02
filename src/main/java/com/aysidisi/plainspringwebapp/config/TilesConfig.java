@@ -15,19 +15,17 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 @Configuration
 public class TilesConfig extends TilesConfigurer
 {
-	public static class JavaDefinitionsFactory extends
-	UnresolvingLocaleDefinitionsFactory
+	public static class JavaDefinitionsFactory extends UnresolvingLocaleDefinitionsFactory
 	{
-		
+
 		public JavaDefinitionsFactory()
 		{
 		}
-
+		
 		@Override
-		public Definition getDefinition(final String name,
-				final Request tilesContext)
+		public Definition getDefinition(final String name, final Request tilesContext)
 		{
-			String[] splittedName = name.split("\\|", 2);
+			final String[] splittedName = name.split("\\|", 2);
 			String viewName = "";
 			String template = "";
 			if (splittedName.length > 1)
@@ -35,56 +33,50 @@ public class TilesConfig extends TilesConfigurer
 				template = splittedName[0];
 				viewName = splittedName[1];
 			}
-			Definition definition = tiles.get(template);
+			final Definition definition = tiles.get(template);
 			if (definition != null)
 			{
-				definition.putAttribute("body", new Attribute("/WEB-INF/views/"
-						+ viewName + ".jsp"));
+				definition.putAttribute("body",
+						new Attribute("/WEB-INF/views/" + viewName + ".jsp"));
 			}
 			return definition;
 		}
 	}
-
-	private static final Map<String, Definition> tiles = new HashMap<String, Definition>();
 	
+	private static final Map<String, Definition> tiles = new HashMap<String, Definition>();
+
 	@Bean
 	public TilesConfigurer tilesConfigurer()
 	{
-		TilesConfigurer tilesConfigurer = new TilesConfigurer();
-		tilesConfigurer
-		.setDefinitionsFactoryClass(JavaDefinitionsFactory.class);
+		final TilesConfigurer tilesConfigurer = new TilesConfigurer();
+		tilesConfigurer.setDefinitionsFactoryClass(JavaDefinitionsFactory.class);
 		tilesConfigurer.setDefinitions(new String[] {});
-		this.addDefinition("bodyOnly", new Attribute(
-				"/WEB-INF/tiles/bodyOnly/bodyOnly.jsp"), this
-				.getBodyOnlyAttributes());
+		this.addDefinition("bodyOnly", new Attribute("/WEB-INF/tiles/bodyOnly/bodyOnly.jsp"),
+				this.getBodyOnlyAttributes());
 		this.addDefinition("mainTemplate", new Attribute(
-				"/WEB-INF/tiles/mainTemplate/mainTemplate.jsp"), this
-				.getMainTemplateAttributes());
+				"/WEB-INF/tiles/mainTemplate/mainTemplate.jsp"), this.getMainTemplateAttributes());
 		return tilesConfigurer;
 	}
-	
+
 	private void addDefinition(final String name, final Attribute template,
 			final Map<String, Attribute> attributes)
 	{
 		tiles.put(name, new Definition(name, template, attributes));
 	}
-	
+
 	private Map<String, Attribute> getBodyOnlyAttributes()
 	{
-		Map<String, Attribute> attributes = new HashMap<String, Attribute>();
-		return attributes;
-	}
-	
-	private Map<String, Attribute> getMainTemplateAttributes()
-	{
-		Map<String, Attribute> attributes = new HashMap<String, Attribute>();
-		attributes.put("header", new Attribute(
-				"/WEB-INF/tiles/mainTemplate/header.jsp"));
-		attributes.put("navigation", new Attribute(
-				"/WEB-INF/tiles/mainTemplate/navigation.jsp"));
-		attributes.put("footer", new Attribute(
-				"/WEB-INF/tiles/mainTemplate/footer.jsp"));
+		final Map<String, Attribute> attributes = new HashMap<String, Attribute>();
 		return attributes;
 	}
 
+	private Map<String, Attribute> getMainTemplateAttributes()
+	{
+		final Map<String, Attribute> attributes = new HashMap<String, Attribute>();
+		attributes.put("header", new Attribute("/WEB-INF/tiles/mainTemplate/header.jsp"));
+		attributes.put("navigation", new Attribute("/WEB-INF/tiles/mainTemplate/navigation.jsp"));
+		attributes.put("footer", new Attribute("/WEB-INF/tiles/mainTemplate/footer.jsp"));
+		return attributes;
+	}
+	
 }

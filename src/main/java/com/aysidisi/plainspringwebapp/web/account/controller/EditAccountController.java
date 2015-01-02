@@ -23,30 +23,31 @@ public class EditAccountController
 {
 	@Autowired
 	private AccountService accountService;
-
+	
 	@Autowired
 	private AccountValidator accountValidator;
-	
+
 	@RequestMapping(value = "/account/", method = RequestMethod.GET, params = "edit")
 	public ModelAndView editAccount()
 	{
-		ModelAndView modelAndView = new ModelAndView(ViewManager.generateViewName(
+		final ModelAndView modelAndView = new ModelAndView(ViewManager.generateViewName(
 				ViewTemplate.mainTemplate, "account/editAccount"));
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		final Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
 		this.initView(modelAndView, this.accountService.findByName(authentication.getName()));
 		return modelAndView;
 	}
-
+	
 	public void initView(final ModelAndView modelAndView, final Account account)
 	{
 		modelAndView.addObject("account", account);
 	}
-	
+
 	@RequestMapping(value = "/account", method = RequestMethod.POST, params = "edit")
 	public ModelAndView updateAccount(@ModelAttribute final Account account)
 	{
 		ModelAndView modelAndView;
-		List<String> errors = this.accountValidator.validateAccount(account);
+		final List<String> errors = this.accountValidator.validateAccount(account);
 		if (errors.isEmpty())
 		{
 			this.accountService.save(account);

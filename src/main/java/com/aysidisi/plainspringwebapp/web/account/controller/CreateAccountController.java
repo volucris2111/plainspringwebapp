@@ -24,34 +24,34 @@ public class CreateAccountController
 {
 	@Autowired
 	private AccountService accountService;
-
+	
 	@Autowired
 	private AccountValidator accountValidator;
-
+	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public ModelAndView createAccount()
 	{
-		ModelAndView modelAndView = new ModelAndView(ViewManager.generateViewName(
+		final ModelAndView modelAndView = new ModelAndView(ViewManager.generateViewName(
 				ViewTemplate.bodyOnly, "account/createAccount"));
-		List<GrantedAuthority> authorities = new LinkedList<GrantedAuthority>();
+		final List<GrantedAuthority> authorities = new LinkedList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		this.initView(modelAndView, new Account());
 		return modelAndView;
 	}
-
+	
 	public void initView(final ModelAndView modelAndView, final Account account)
 	{
 		modelAndView.addObject("account", account);
 	}
-	
+
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ModelAndView saveAccount(@ModelAttribute final Account account)
 	{
 		ModelAndView modelAndView;
-		List<String> errors = this.accountValidator.validateAccount(account);
+		final List<String> errors = this.accountValidator.validateAccount(account);
 		if (errors.isEmpty())
 		{
-			List<SimpleGrantedAuthority> authorities = new LinkedList<SimpleGrantedAuthority>();
+			final List<SimpleGrantedAuthority> authorities = new LinkedList<SimpleGrantedAuthority>();
 			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 			account.setAuthorities(authorities);
 			account.setEnabled(true);
@@ -66,5 +66,5 @@ public class CreateAccountController
 		}
 		return modelAndView;
 	}
-
+	
 }

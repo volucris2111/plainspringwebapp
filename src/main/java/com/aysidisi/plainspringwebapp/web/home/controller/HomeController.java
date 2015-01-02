@@ -18,5 +18,5 @@ public class HomeController
 		return new ModelAndView(
 				ViewManager.generateViewName(ViewTemplate.mainTemplate, "core/home"));
 	}
-	
+
 }

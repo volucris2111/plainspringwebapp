@@ -15,64 +15,64 @@ import com.aysidisi.plainspringwebapp.web.account.model.Account;
 
 public class CustomChannelInterceptor implements ChannelInterceptor
 {
-
+	
 	@Override
 	public void afterReceiveCompletion(final Message<?> message, final MessageChannel channel,
 			final Exception ex)
 	{
-		
-	}
 
+	}
+	
 	@Override
 	public void afterSendCompletion(final Message<?> message, final MessageChannel channel,
 			final boolean sent, final Exception ex)
 	{
-		
-	}
 
+	}
+	
 	@Override
 	public Message<?> postReceive(final Message<?> message, final MessageChannel channel)
 	{
 		return message;
 	}
-
+	
 	@Override
 	public void postSend(final Message<?> message, final MessageChannel channel, final boolean sent)
 	{
 	}
-
+	
 	@Override
 	public boolean preReceive(final MessageChannel channel)
 	{
 		return false;
 	}
-
+	
 	@Override
 	public Message<?> preSend(final Message<?> message, final MessageChannel channel)
 	{
-		SimpMessageType simpMessageType = (SimpMessageType) message.getHeaders().get(
+		final SimpMessageType simpMessageType = (SimpMessageType) message.getHeaders().get(
 				"simpMessageType");
 		if (!simpMessageType.equals(SimpMessageType.MESSAGE))
 		{
-			String simpDestination = (String) message.getHeaders().get("simpDestination");
-			HashMap<String, HashMap<BigInteger, Account>> webSocketSessionCache = WebSocketSessionCache
+
+			final String simpDestination = (String) message.getHeaders().get("simpDestination");
+			final HashMap<String, HashMap<BigInteger, Account>> webSocketSessionCache = WebSocketSessionCache
 					.getInstance();
+			final Account account = (Account) ((UsernamePasswordAuthenticationToken) message
+					.getHeaders().get("simpUser")).getPrincipal();
 			if (simpMessageType.equals(SimpMessageType.SUBSCRIBE))
 			{
 				if (webSocketSessionCache.get(simpDestination) == null)
 				{
 					webSocketSessionCache.put(simpDestination, new HashMap<BigInteger, Account>());
 				}
-				Account account = (Account) ((UsernamePasswordAuthenticationToken) message
-						.getHeaders().get("simpUser")).getPrincipal();
+
 				webSocketSessionCache.get(simpDestination).put(account.getId(), account);
 			}
 			else if (simpMessageType.equals(SimpMessageType.DISCONNECT)
 					|| simpMessageType.equals(SimpMessageType.UNSUBSCRIBE))
 			{
-				Account account = (Account) ((UsernamePasswordAuthenticationToken) message
-						.getHeaders().get("simpUser")).getPrincipal();
-				for (String key : webSocketSessionCache.keySet())
+				for (final String key : webSocketSessionCache.keySet())
 				{
 					webSocketSessionCache.get(key).remove(account.getId());
 				}

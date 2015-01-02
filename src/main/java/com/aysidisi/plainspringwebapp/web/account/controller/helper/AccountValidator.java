@@ -15,11 +15,11 @@ public class AccountValidator
 {
 	@Autowired
 	private AccountService accountService;
-	
+
 	public List<String> validateAccount(final Account account)
 	{
-		List<String> errors = new LinkedList<String>();
-		Account storedAccount = this.accountService.findByName(account.getName());
+		final List<String> errors = new LinkedList<String>();
+		final Account storedAccount = this.accountService.findByName(account.getName());
 		if (account.getName() == null || account.getName().isEmpty()
 				|| account.getPassword() == null || account.getPassword().isEmpty()
 				|| account.getMail() == null || account.getMail().isEmpty())

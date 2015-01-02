@@ -15,25 +15,25 @@ public class AccountService
 {
 	@Autowired
 	private AccountDao accountDao;
-	
+
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
-	
+
 	public void delete(final Account account)
 	{
 		this.accountDao.delete(account);
 	}
-	
+
 	public List<Account> findAll()
 	{
 		return this.accountDao.findAll();
 	}
-	
+
 	public Account findByName(final String name)
 	{
 		return this.accountDao.findByName(name);
 	}
-
+	
 	public void save(final Account account)
 	{
 		Account storedAccount = this.accountDao.findByName(account.getName());
