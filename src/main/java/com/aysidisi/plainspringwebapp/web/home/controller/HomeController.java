@@ -15,8 +15,7 @@ public class HomeController
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home()
 	{
-		return new ModelAndView(
-				ViewManager.generateViewName(ViewTemplate.mainTemplate, "core/home"));
+		return ViewManager.generateModelAndView(ViewTemplate.mainTemplate, "core/home");
 	}
-
+	
 }

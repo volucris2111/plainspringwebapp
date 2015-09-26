@@ -19,17 +19,17 @@ public class AccountController
 {
 	@Autowired
 	private AccountService accountService;
-
+	
 	@RequestMapping(value = "/account/", method = RequestMethod.GET)
 	public ModelAndView account()
 	{
-		final ModelAndView modelAndView = new ModelAndView(ViewManager.generateViewName(
-				ViewTemplate.mainTemplate, "account/account"));
-		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		ModelAndView modelAndView = ViewManager.generateModelAndView(ViewTemplate.mainTemplate,
+				"account/account");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		this.initView(modelAndView, this.accountService.findByName(authentication.getName()));
 		return modelAndView;
 	}
-
+	
 	public void initView(final ModelAndView modelAndView, final Account account)
 	{
 		modelAndView.addObject("account", account);

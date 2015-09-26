@@ -18,8 +18,8 @@ public class LoginController
 			@RequestParam(value = "accountCreated", required = false) final String accountCreated,
 			@RequestParam(value = "logout", required = false) final String logout)
 	{
-		final ModelAndView modelAndView = new ModelAndView(ViewManager.generateViewName(
-				ViewTemplate.bodyOnly, "login/login"));
+		ModelAndView modelAndView = ViewManager.generateModelAndView(ViewTemplate.bodyOnly,
+				"login/login");
 		if (error != null)
 		{
 			modelAndView.addObject("error", "Invalid username and password!");

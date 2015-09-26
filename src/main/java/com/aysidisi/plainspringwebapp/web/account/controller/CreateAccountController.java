@@ -24,47 +24,48 @@ public class CreateAccountController
 {
 	@Autowired
 	private AccountService accountService;
-	
+
 	@Autowired
 	private AccountValidator accountValidator;
-	
+
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public ModelAndView createAccount()
 	{
-		final ModelAndView modelAndView = new ModelAndView(ViewManager.generateViewName(
-				ViewTemplate.bodyOnly, "account/createAccount"));
-		final List<GrantedAuthority> authorities = new LinkedList<GrantedAuthority>();
+		ModelAndView modelAndView = ViewManager.generateModelAndView(ViewTemplate.bodyOnly,
+				"account/createAccount");
+		List<GrantedAuthority> authorities = new LinkedList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		this.initView(modelAndView, new Account());
 		return modelAndView;
 	}
-	
+
 	public void initView(final ModelAndView modelAndView, final Account account)
 	{
 		modelAndView.addObject("account", account);
 	}
-
+	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ModelAndView saveAccount(@ModelAttribute final Account account)
 	{
 		ModelAndView modelAndView;
-		final List<String> errors = this.accountValidator.validateAccount(account);
+		List<String> errors = this.accountValidator.validateAccount(account);
 		if (errors.isEmpty())
 		{
-			final List<SimpleGrantedAuthority> authorities = new LinkedList<SimpleGrantedAuthority>();
+			List<SimpleGrantedAuthority> authorities = new LinkedList<SimpleGrantedAuthority>();
 			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 			account.setAuthorities(authorities);
 			account.setEnabled(true);
-			this.accountService.save(account);
+			this.accountService.saveOnlyEditableFields(account);
 			modelAndView = new ModelAndView("redirect:/login?accountCreated");
 		}
 		else
 		{
-			modelAndView = new ModelAndView("account/createAccount");
+			modelAndView = ViewManager.generateModelAndView(ViewTemplate.bodyOnly,
+					"account/createAccount");
 			this.initView(modelAndView, account);
 			modelAndView.addObject("errors", errors);
 		}
 		return modelAndView;
 	}
-	
+
 }

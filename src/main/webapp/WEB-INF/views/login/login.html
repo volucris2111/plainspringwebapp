@@ -1,0 +1,37 @@
+<h1>Herzlich Willkommen!</h1>
+Bitte logge dich ein oder registriere dich!
+<form th:action="@{/login}" method='POST'>
+	<table>
+		<tr>
+			<td>
+				Account:
+			</td>
+			<td>
+				<input type='text' name="username"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Passwort
+			</td>
+			<td>
+				<input type='password' name="password"/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<div th:if="${error != null}" class="error" th:text="${error}"></div>
+				<div th:if="${msg != null}" class="msg" th:text="${msg}"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a th:href="@{/signup}">Registrieren</a>
+			</td>
+			<td align="right">
+				<input name="submit" type="submit" value="Login"/>
+ 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			</td>
+		</tr>
+	</table>
+</form>

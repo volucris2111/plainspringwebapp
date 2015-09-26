@@ -16,8 +16,7 @@ public class HelloController
 	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
 	public ModelAndView adminPage()
 	{
-		final ModelAndView model = new ModelAndView(ViewManager.generateViewName(ViewTemplate.bodyOnly,
-				"admin"));
+		ModelAndView model = ViewManager.generateModelAndView(ViewTemplate.bodyOnly, "admin");
 		model.addObject("title", "Spring Security Custom Login Form");
 		model.addObject("message", "This is protected page!");
 		return model;

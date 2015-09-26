@@ -15,7 +15,6 @@ public class ChatController
 	@RequestMapping(value = "/chat", method = RequestMethod.GET)
 	public ModelAndView home()
 	{
-		return new ModelAndView(
-				ViewManager.generateViewName(ViewTemplate.mainTemplate, "chat/chat"));
+		return ViewManager.generateModelAndView(ViewTemplate.mainTemplate, "chat/chat");
 	}
 }

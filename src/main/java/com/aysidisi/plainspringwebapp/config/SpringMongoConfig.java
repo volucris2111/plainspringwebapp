@@ -21,14 +21,14 @@ public class SpringMongoConfig extends AbstractMongoConfiguration
 	@Bean
 	public MongoClient mongo() throws Exception
 	{
-		final List<ServerAddress> serverAdresses = new LinkedList<ServerAddress>();
-		final ServerAddress address = new ServerAddress("127.0.0.1", 27017);
+		List<ServerAddress> serverAdresses = new LinkedList<ServerAddress>();
+		ServerAddress address = new ServerAddress("127.0.0.1", 27017);
 		serverAdresses.add(address);
-		final List<MongoCredential> credentials = new LinkedList<MongoCredential>();
-		final MongoCredential credential = MongoCredential.createMongoCRCredential("admin",
-				"nicedb", "admin".toCharArray());
+		List<MongoCredential> credentials = new LinkedList<MongoCredential>();
+		MongoCredential credential = MongoCredential.createMongoCRCredential("admin", "nicedb",
+				"admin".toCharArray());
 		credentials.add(credential);
-		final MongoClient mongoClient = new MongoClient(address, credentials);
+		MongoClient mongoClient = new MongoClient(address, credentials);
 		return mongoClient;
 	}
 	

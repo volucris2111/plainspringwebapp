@@ -12,19 +12,19 @@ import com.aysidisi.plainspringwebapp.web.account.model.Account;
 @Service
 public class CustomUserDetailsService implements UserDetailsService
 {
-
+	
 	@Autowired
 	private AccountDao accountDao;
-
+	
 	@Override
 	public Account loadUserByUsername(final String name) throws UsernameNotFoundException
 	{
-		final Account account = this.accountDao.findByName(name);
+		Account account = this.accountDao.findByName(name);
 		if (account == null)
 		{
 			throw new UsernameNotFoundException("FUUUU");
 		}
 		return account;
 	}
-	
+
 }

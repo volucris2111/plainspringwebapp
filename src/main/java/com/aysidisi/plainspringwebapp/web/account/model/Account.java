@@ -1,11 +1,9 @@
 
 package com.aysidisi.plainspringwebapp.web.account.model;
 
-import java.math.BigInteger;
 import java.util.Collection;
 
-import javax.persistence.GeneratedValue;
-
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -27,11 +25,12 @@ public class Account implements UserDetails
 	
 	private Boolean credentialsNonExpired;
 	
+	private ObjectId currentAvatarId;
+
 	private Boolean enabled;
 	
 	@Id
-	@GeneratedValue
-	private BigInteger id;
+	private ObjectId id;
 	
 	private String mail;
 	
@@ -54,18 +53,23 @@ public class Account implements UserDetails
 	{
 		return this.authorities;
 	}
-
+	
 	public Boolean getCredentialsNonExpired()
 	{
 		return this.credentialsNonExpired == null ? true : this.credentialsNonExpired;
 	}
 	
+	public ObjectId getCurrentAvatarId()
+	{
+		return this.currentAvatarId;
+	}
+
 	public Boolean getEnabled()
 	{
 		return this.enabled == null ? true : this.enabled;
 	}
 	
-	public BigInteger getId()
+	public ObjectId getId()
 	{
 		return this.id;
 	}
@@ -109,7 +113,7 @@ public class Account implements UserDetails
 	{
 		return this.getCredentialsNonExpired();
 	}
-
+	
 	@Override
 	public boolean isEnabled()
 	{
@@ -125,12 +129,12 @@ public class Account implements UserDetails
 	{
 		this.accountNonExpired = accountNonExpired;
 	}
-	
+
 	public void setAccountNonLocked(final boolean accountNonLocked)
 	{
 		this.accountNonLocked = accountNonLocked;
 	}
-
+	
 	public void setAccountNonLocked(final Boolean accountNonLocked)
 	{
 		this.accountNonLocked = accountNonLocked;
@@ -140,7 +144,7 @@ public class Account implements UserDetails
 	{
 		this.authorities = authorities;
 	}
-	
+
 	public void setCredentialsNonExpired(final boolean credentialsNonExpired)
 	{
 		this.credentialsNonExpired = credentialsNonExpired;
@@ -151,12 +155,17 @@ public class Account implements UserDetails
 		this.credentialsNonExpired = credentialsNonExpired;
 	}
 	
+	public void setCurrentAvatarId(final ObjectId currentAvatarId)
+	{
+		this.currentAvatarId = currentAvatarId;
+	}
+	
 	public void setEnabled(final Boolean enabled)
 	{
 		this.enabled = enabled;
 	}
 	
-	public void setId(final BigInteger id)
+	public void setId(final ObjectId id)
 	{
 		this.id = id;
 	}

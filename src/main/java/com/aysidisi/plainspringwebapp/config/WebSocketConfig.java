@@ -25,11 +25,11 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer
 	{
 		registration.setInterceptors(new CustomChannelInterceptor());
 	}
-	
+
 	@Override
 	public void configureMessageBroker(final MessageBrokerRegistry registry)
 	{
-		registry.enableSimpleBroker("/chat");
+		registry.enableSimpleBroker("/adventure");
 		registry.setApplicationDestinationPrefixes("/app");
 	}
 
@@ -37,6 +37,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer
 	public void registerStompEndpoints(final StompEndpointRegistry registry)
 	{
 		registry.addEndpoint("/chatreg").withSockJS();
+		registry.addEndpoint("/worldofdayum").withSockJS();
 	}
 	
 }

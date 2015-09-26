@@ -30,10 +30,9 @@ public class EditAccountController
 	@RequestMapping(value = "/account/", method = RequestMethod.GET, params = "edit")
 	public ModelAndView editAccount()
 	{
-		final ModelAndView modelAndView = new ModelAndView(ViewManager.generateViewName(
-				ViewTemplate.mainTemplate, "account/editAccount"));
-		final Authentication authentication = SecurityContextHolder.getContext()
-				.getAuthentication();
+		ModelAndView modelAndView = ViewManager.generateModelAndView(ViewTemplate.mainTemplate,
+				"account/editAccount");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		this.initView(modelAndView, this.accountService.findByName(authentication.getName()));
 		return modelAndView;
 	}
@@ -47,16 +46,16 @@ public class EditAccountController
 	public ModelAndView updateAccount(@ModelAttribute final Account account)
 	{
 		ModelAndView modelAndView;
-		final List<String> errors = this.accountValidator.validateAccount(account);
+		List<String> errors = this.accountValidator.validateAccount(account);
 		if (errors.isEmpty())
 		{
-			this.accountService.save(account);
+			this.accountService.saveOnlyEditableFields(account);
 			modelAndView = new ModelAndView("redirect:/login?accountCreated");
 		}
 		else
 		{
-			modelAndView = new ModelAndView(ViewManager.generateViewName(ViewTemplate.mainTemplate,
-					"account/editAccount"));
+			modelAndView = ViewManager.generateModelAndView(ViewTemplate.mainTemplate,
+					"account/editAccount");
 			this.initView(modelAndView, account);
 			modelAndView.addObject("errors", errors);
 		}

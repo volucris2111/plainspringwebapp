@@ -1,0 +1,3 @@
+<form name='loginForm' th:action="@{/login?logout}" method='POST' id="logoutForm">
+	Willkommen <span sec:authentication="name"></span>! <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> <input name="submit" type="submit" value="Logout"/>
+</form> 

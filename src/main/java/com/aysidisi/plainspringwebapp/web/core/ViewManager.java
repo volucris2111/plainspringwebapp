@@ -1,10 +1,14 @@
 
 package com.aysidisi.plainspringwebapp.web.core;
 
+import org.springframework.web.servlet.ModelAndView;
+
 public class ViewManager
 {
-	static public String generateViewName(final ViewTemplate template, final String viewName)
+	static public ModelAndView generateModelAndView(final ViewTemplate template, final String view)
 	{
-		return template + "|" + viewName;
+		ModelAndView modelAndView = new ModelAndView(template.getPath());
+		modelAndView.addObject("view", "views/" + view);
+		return modelAndView;
 	}
 }

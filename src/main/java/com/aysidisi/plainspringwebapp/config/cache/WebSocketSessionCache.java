@@ -1,34 +1,34 @@
 
 package com.aysidisi.plainspringwebapp.config.cache;
 
-import java.math.BigInteger;
 import java.util.HashMap;
+
+import org.bson.types.ObjectId;
 
 import com.aysidisi.plainspringwebapp.web.account.model.Account;
 
 public class WebSocketSessionCache
 {
 	private static WebSocketSessionCache INSTANCE = new WebSocketSessionCache();
-	
-	public static HashMap<String, HashMap<BigInteger, Account>> getInstance()
+
+	public static WebSocketSessionCache getInstance()
 	{
-		return INSTANCE.getWebSocketSessionCache();
+		return INSTANCE;
 	}
 	
-	private HashMap<String, HashMap<BigInteger, Account>> webSocketSessionCache = new HashMap<String, HashMap<BigInteger, Account>>();
-	
+	private final HashMap<String, HashMap<ObjectId, Account>> cache = new HashMap<String, HashMap<ObjectId, Account>>();
+
 	private WebSocketSessionCache()
 	{
 	}
-	
-	public HashMap<String, HashMap<BigInteger, Account>> getWebSocketSessionCache()
+
+	public HashMap<String, HashMap<ObjectId, Account>> getWebSocketSessionCache()
 	{
-		return this.webSocketSessionCache;
+		return this.cache;
 	}
-	
-	public void setWebSocketSessionCache(
-			final HashMap<String, HashMap<BigInteger, Account>> webSocketSessionCache)
+
+	public HashMap<ObjectId, Account> getWebSocketSessionCacheBySubject(final String subject)
 	{
-		this.webSocketSessionCache = webSocketSessionCache;
+		return this.cache.get(subject);
 	}
 }

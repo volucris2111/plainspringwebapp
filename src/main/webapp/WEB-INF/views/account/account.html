@@ -1,0 +1,16 @@
+<table th:if="${not #lists.isEmpty(errors)}">
+	<tr th:each="error : ${errors}">
+		<td th:text="${error}"></td>
+	</tr> 
+</table>
+<table>
+	<tr>
+		<td>Accountname:</td><td th:text="${account.name}"></td>
+	</tr>
+	<tr>
+		<td>E-Mail:</td><td th:text="${account.mail}"></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td align="right"><a th:href="@{/account/?edit}"><button>Ändern</button></a></td>
+	</tr>
+</table>

@@ -14,17 +14,17 @@ public class ChatWebsocket
 {
 	@Autowired
 	private AccountService accountService;
-
+	
 	@Autowired
 	private SimpMessageSendingOperations messagingTemplate;
-	
+
 	@MessageMapping("/connect")
 	public void connect(final SimpMessageHeaderAccessor headerAccessor) throws Exception
 	{
 		this.messagingTemplate.convertAndSend("/chat/connect", headerAccessor.getUser().getName()
 				+ " ist beigetreten!");
 	}
-
+	
 	@MessageMapping("/message")
 	public void sendMessage(final String message, final SimpMessageHeaderAccessor headerAccessor)
 			throws Exception

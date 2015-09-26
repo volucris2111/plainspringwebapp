@@ -1,0 +1,25 @@
+<table th:if="${not #lists.isEmpty(errors)}">
+	<tr th:each="error : ${errors}">
+		<td th:text="${error}"></td>
+	</tr> 
+</table>
+<form th:action="@{/signup}" th:method="post">
+	<table>
+		<tr>
+			<td>Accountname:</td><td><input type="text" name="name" th:value="${account.name}" /></td>
+		</tr>
+		<tr>
+			<td>Passwort:</td><td><input type="password" name="password" th:value="${account.password}" /></td>
+		</tr>
+		<tr>
+			<td>Passwort wiederholen:</td><td><input type="password" id="secondPassword"/></td>
+		</tr>
+		<tr>
+			<td>E-Mail:</td><td><input type="text" name="mail" th:value="${account.mail}" /></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td><td><button type="submit" name="save" value="speichern">Registrieren</button></td>
+		</tr>
+	</table>
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+</form>
